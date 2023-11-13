@@ -59,7 +59,7 @@ def train_semantic_transformer():
         kmeans_path=kmeans_path
         )   # 每个函数中重新创建 wav2vec，后面会删掉
     
-    soundstream = AudioLMSoundStream()
+    
     semantic_transformer = SemanticTransformer(
         num_semantic_tokens=wav2vec.codebook_size, 
         dim=1024, 

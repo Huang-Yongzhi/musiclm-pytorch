@@ -3,7 +3,7 @@ from audiolm_pytorch import HubertWithKmeans
 from audiolm_pytorch import SemanticTransformer, SemanticTransformerTrainer
 from audiolm_pytorch import CoarseTransformer, CoarseTransformerTrainer
 from audiolm_pytorch import FineTransformer, FineTransformerTrainer
-from audiolm_pytorch import AudioLMSoundStream, AudioLM
+from audiolm_pytorch import AudioLMSoundStream, AudioLM, MusicLMSoundStream
 import gc  # 导入垃圾回收模块
 from musiclm_pytorch import MuLaNEmbedQuantizer
 from musiclm_pytorch import MuLaN, AudioSpectrogramTransformer, TextTransformer
@@ -61,7 +61,7 @@ def train_coarse_transformer():
         checkpoint_path=checkpoint_path, 
         kmeans_path=kmeans_path
         )   # 每个函数中重新创建 wav2vec，后面会删掉
-    soundstream = AudioLMSoundStream()
+    soundstream = MusicLMSoundStream()
 
     coarse_transformer = CoarseTransformer(
         num_semantic_tokens=wav2vec.codebook_size, 

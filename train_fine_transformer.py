@@ -3,7 +3,7 @@ from audiolm_pytorch import HubertWithKmeans
 from audiolm_pytorch import SemanticTransformer, SemanticTransformerTrainer
 from audiolm_pytorch import CoarseTransformer, CoarseTransformerTrainer
 from audiolm_pytorch import FineTransformer, FineTransformerTrainer
-from audiolm_pytorch import AudioLMSoundStream, AudioLM
+from audiolm_pytorch import AudioLMSoundStream, AudioLM, MusicLMSoundStream
 import gc  # 导入垃圾回收模块
 import pandas as pd
 from nltk.tokenize import word_tokenize
@@ -29,7 +29,7 @@ num_train_steps = 1
 
 # 函数：训练 FineTransformer
 def train_fine_transformer(audio_data, combined_data):
-    soundstream = AudioLMSoundStream()
+    soundstream = MusicLMSoundStream()
 
     fine_transformer = FineTransformer(
                     num_coarse_quantizers=4, 
@@ -45,7 +45,7 @@ def train_fine_transformer(audio_data, combined_data):
         transformer=fine_transformer,
         codec=soundstream, 
         # audio_data=audio_data, # 没有这个输入
-        text_data=combined_data, 
+        # text_data=combined_data, # 没有这个输入
         folder=audio_output_dir, 
         batch_size=batch_size, 
         data_max_length=data_max_length, 
