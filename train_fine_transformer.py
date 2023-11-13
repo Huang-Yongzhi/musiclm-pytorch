@@ -22,7 +22,7 @@ kmeans_path = 'hubert_base_ls960_L9_km500.bin'
 audio_output_dir = './downloaded_audios'
 batch_size = 1
 data_max_length = 320 * 32
-num_train_steps = 1
+num_train_steps = 1_000_000
 
 
 
@@ -32,12 +32,12 @@ def train_fine_transformer(audio_data, combined_data):
     soundstream = MusicLMSoundStream()
 
     fine_transformer = FineTransformer(
-                    num_coarse_quantizers=4, 
-                    num_fine_quantizers=8, 
-                    codebook_size=1024, 
-                    dim=1024, 
-                    depth=6, 
-                    audio_text_condition=True # 需要输入文本
+                        num_coarse_quantizers = 3,
+                        num_fine_quantizers = 5,
+                        codebook_size = 1024,
+                        dim = 512,
+                        depth = 6,
+                        flash_attn = True
                     ).cuda()
     
     # 确保 Trainer 接收文本数据作为输入
