@@ -60,8 +60,26 @@ def train_coarse_transformer():
     wav2vec = HubertWithKmeans(checkpoint_path=checkpoint_path, kmeans_path=kmeans_path)   # 每个函数中重新创建 wav2vec，后面会删掉
     soundstream = AudioLMSoundStream()
 
-    coarse_transformer = CoarseTransformer(num_semantic_tokens=wav2vec.codebook_size, codebook_size=1024, num_coarse_quantizers=4, dim=1024, depth=6, audio_text_condition=True).cuda()
-    trainer = CoarseTransformerTrainer(transformer=coarse_transformer, codec=soundstream, wav2vec=wav2vec, audio_conditioner=quantizer, folder=audio_output_dir, batch_size=batch_size, data_max_length=data_max_length, num_train_steps=num_train_steps)
+    coarse_transformer = CoarseTransformer(
+        num_semantic_tokens=wav2vec.codebook_size, 
+        codebook_size=1024, 
+        num_coarse_quantizers=4, 
+        dim=1024, 
+        depth=6, 
+        audio_text_condition=True
+        ).cuda()
+    
+    trainer = CoarseTransformerTrainer(
+        transformer=coarse_transformer, 
+        codec=soundstream, 
+        wav2vec=wav2vec, 
+        audio_conditioner=quantizer, 
+        folder=audio_output_dir, 
+        batch_size=batch_size, 
+        data_max_length=data_max_length, 
+        num_train_steps=num_train_steps
+        )
+    
     trainer.train()
     torch.save(coarse_transformer.state_dict(), 'coarse_transformer.pth')
     print("save coarse_transformer.pth")

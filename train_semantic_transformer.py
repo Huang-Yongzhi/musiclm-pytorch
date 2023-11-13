@@ -54,10 +54,29 @@ num_train_steps = 1
 
 # 函数：训练 SemanticTransformer
 def train_semantic_transformer(): 
-    wav2vec = HubertWithKmeans(checkpoint_path=checkpoint_path, kmeans_path=kmeans_path)   # 每个函数中重新创建 wav2vec，后面会删掉
+    wav2vec = HubertWithKmeans(
+        checkpoint_path=checkpoint_path, 
+        kmeans_path=kmeans_path
+        )   # 每个函数中重新创建 wav2vec，后面会删掉
+    
     soundstream = AudioLMSoundStream()
-    semantic_transformer = SemanticTransformer(num_semantic_tokens=wav2vec.codebook_size, dim=1024, depth=6, audio_text_condition=True).cuda()
-    trainer = SemanticTransformerTrainer(transformer=semantic_transformer, wav2vec=wav2vec, audio_conditioner=quantizer, folder=audio_output_dir, batch_size=batch_size, data_max_length=data_max_length, num_train_steps=num_train_steps)
+    semantic_transformer = SemanticTransformer(
+        num_semantic_tokens=wav2vec.codebook_size, 
+        dim=1024, 
+        depth=6, 
+        audio_text_condition=True
+        ).cuda()
+    
+    trainer = SemanticTransformerTrainer(
+        transformer=semantic_transformer, 
+        wav2vec=wav2vec, 
+        audio_conditioner=quantizer, 
+        folder=audio_output_dir, 
+        batch_size=batch_size, 
+        data_max_length=data_max_length, 
+        num_train_steps=num_train_steps
+        )
+    
     trainer.train()
     torch.save(semantic_transformer.state_dict(), 'semantic_transformer.pth')
     print("save semantic_transformer.pth")
