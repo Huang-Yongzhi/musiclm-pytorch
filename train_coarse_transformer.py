@@ -38,6 +38,7 @@ def train_coarse_transformer():
     trainer = CoarseTransformerTrainer(transformer=coarse_transformer, codec=soundstream, wav2vec=wav2vec, audio_conditioner=quantizer, folder=audio_output_dir, batch_size=batch_size, data_max_length=data_max_length, num_train_steps=num_train_steps)
     trainer.train()
     torch.save(coarse_transformer.state_dict(), 'coarse_transformer.pth')
+    print("save coarse_transformer.pth")
     del coarse_transformer, trainer, wav2vec, soundstream
     gc.collect()
 

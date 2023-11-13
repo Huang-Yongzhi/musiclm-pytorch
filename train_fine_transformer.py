@@ -24,6 +24,7 @@ def train_fine_transformer():
     trainer = FineTransformerTrainer(transformer=fine_transformer, codec=soundstream, folder=audio_output_dir, batch_size=batch_size, data_max_length=data_max_length, num_train_steps=num_train_steps)
     trainer.train()
     torch.save(fine_transformer.state_dict(), 'fine_transformer.pth')
+    print("save fine_transformer.pth")    
     del fine_transformer, trainer, soundstream
     gc.collect()
 

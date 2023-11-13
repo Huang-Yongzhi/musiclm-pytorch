@@ -37,6 +37,7 @@ def train_semantic_transformer():
     trainer = SemanticTransformerTrainer(transformer=semantic_transformer, wav2vec=wav2vec, audio_conditioner=quantizer, folder=audio_output_dir, batch_size=batch_size, data_max_length=data_max_length, num_train_steps=num_train_steps)
     trainer.train()
     torch.save(semantic_transformer.state_dict(), 'semantic_transformer.pth')
+    print("save semantic_transformer.pth")
     del semantic_transformer, trainer, wav2vec
     gc.collect()  # 执行垃圾回收
 
