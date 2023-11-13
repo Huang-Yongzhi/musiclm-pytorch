@@ -2,7 +2,7 @@ import torch
 from audiolm_pytorch import HubertWithKmeans
 from audiolm_pytorch import SemanticTransformer, SemanticTransformerTrainer
 from audiolm_pytorch import CoarseTransformer, CoarseTransformerTrainer
-from audiolm_pytorch import FineTransformer, FineTransformerTrainer
+from audiolm_pytorch import SoundStream, FineTransformer, FineTransformerTrainer
 from audiolm_pytorch import AudioLMSoundStream, AudioLM, MusicLMSoundStream
 import gc  # 导入垃圾回收模块
 import pandas as pd
@@ -32,12 +32,12 @@ def train_fine_transformer(audio_data, combined_data):
     soundstream = MusicLMSoundStream()
 
     fine_transformer = FineTransformer(
-                        num_coarse_quantizers = 3,
-                        num_fine_quantizers = 5,
-                        codebook_size = 1024,
-                        dim = 512,
-                        depth = 6,
-                        flash_attn = True
+            num_coarse_quantizers = 4,
+            num_fine_quantizers = 8,
+            codebook_size = 1024,
+            dim = 1024,
+            depth = 6,
+            audio_text_condition = True
                     ).cuda()
     
     # 确保 Trainer 接收文本数据作为输入
@@ -50,6 +50,7 @@ def train_fine_transformer(audio_data, combined_data):
         batch_size=batch_size, 
         data_max_length=data_max_length, 
         num_train_steps=num_train_steps
+        audio_conditioner = quantizer
         )    
     
     trainer.train()

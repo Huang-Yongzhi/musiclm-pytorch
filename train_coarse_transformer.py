@@ -2,7 +2,7 @@ import torch
 from audiolm_pytorch import HubertWithKmeans
 from audiolm_pytorch import SemanticTransformer, SemanticTransformerTrainer
 from audiolm_pytorch import CoarseTransformer, CoarseTransformerTrainer
-from audiolm_pytorch import FineTransformer, FineTransformerTrainer
+from audiolm_pytorch import SoundStream, FineTransformer, FineTransformerTrainer
 from audiolm_pytorch import AudioLMSoundStream, AudioLM, MusicLMSoundStream
 import gc  # 导入垃圾回收模块
 from musiclm_pytorch import MuLaNEmbedQuantizer
