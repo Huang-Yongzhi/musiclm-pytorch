@@ -73,6 +73,19 @@ def main():
     audio_filenames = df['ytid'].tolist()
     # 构建音频文件的完整路径
     audio_file_paths = [f'./downloaded_audios/{filename}.wav' for filename in audio_filenames]
+    
+    # 初始化计数器
+    existing_files_count = 0
+
+    # 检查每个音频文件是否存在
+    for file_path in audio_file_paths:
+        if os.path.exists(file_path):
+            existing_files_count += 1
+
+    print(f"Total audio files in CSV: {len(audio_filenames)}")
+    print(f"Existing audio files: {existing_files_count}")
+    
+    
     # 预处理音频数据，并获取有效音频文件的索引
     audio_data, valid_audio_indices = process_audio_files(audio_file_paths)
 
