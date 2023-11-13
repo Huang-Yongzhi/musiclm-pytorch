@@ -6,6 +6,30 @@ from audiolm_pytorch import FineTransformer, FineTransformerTrainer
 from audiolm_pytorch import AudioLMSoundStream, AudioLM
 import gc  # 导入垃圾回收模块
 from musiclm_pytorch import MuLaNEmbedQuantizer
+from musiclm_pytorch import MuLaN, AudioSpectrogramTransformer, TextTransformer
+
+audio_transformer = AudioSpectrogramTransformer(
+    dim = 512,
+    depth = 6,
+    heads = 8,
+    dim_head = 64,
+    spec_n_fft = 128,
+    spec_win_length = 24,
+    spec_aug_stretch_factor = 0.8
+)
+
+text_transformer = TextTransformer(
+    dim = 512,
+    depth = 6,
+    heads = 8,
+    dim_head = 64
+)
+
+mulan = MuLaN(
+    audio_transformer = audio_transformer,
+    text_transformer = text_transformer
+)
+
 
 # setup the quantizer with the namespaced conditioning embeddings, unique per quantizer as well as namespace (per transformer)
 
@@ -14,6 +38,8 @@ quantizer = MuLaNEmbedQuantizer(
     conditioning_dims = (1024, 1024, 1024), # say all three transformers have model dimensions of 1024
     namespaces = ('semantic', 'coarse', 'fine')
 )
+
+
 
 # now say you want the conditioning embeddings for semantic transformer
 
