@@ -44,7 +44,7 @@ def train_fine_transformer(audio_data, combined_data):
     trainer = FineTransformerTrainer(
         transformer=fine_transformer,
         codec=soundstream, 
-        audio_data=audio_data,
+        # audio_data=audio_data, # 没有这个输入
         text_data=combined_data, 
         folder=audio_output_dir, 
         batch_size=batch_size, 
