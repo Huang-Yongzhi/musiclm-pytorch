@@ -57,7 +57,10 @@ num_train_steps = 1
 
 # 函数：训练 CoarseTransformer
 def train_coarse_transformer():  
-    wav2vec = HubertWithKmeans(checkpoint_path=checkpoint_path, kmeans_path=kmeans_path)   # 每个函数中重新创建 wav2vec，后面会删掉
+    wav2vec = HubertWithKmeans(
+        checkpoint_path=checkpoint_path, 
+        kmeans_path=kmeans_path
+        )   # 每个函数中重新创建 wav2vec，后面会删掉
     soundstream = AudioLMSoundStream()
 
     coarse_transformer = CoarseTransformer(
