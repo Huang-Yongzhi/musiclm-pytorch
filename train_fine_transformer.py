@@ -49,7 +49,7 @@ def train_fine_transformer(audio_data, combined_data):
         folder=audio_output_dir, 
         batch_size=batch_size, 
         data_max_length=data_max_length, 
-        num_train_steps=num_train_steps
+        num_train_steps=num_train_steps,
         audio_conditioner = quantizer
         )    
     
